@@ -17,7 +17,7 @@ protocol ___VARIABLE_productName:identifier___UIDelegate {
 class ___VARIABLE_productName:identifier___UI : UIView {
     var delegate: ___VARIABLE_productName:identifier___UIDelegate!
     
-    var object : ___VARIABLE_productName:identifier___Model?
+    var entity : ___VARIABLE_productName:identifier___Model?
     var cellIdentifier = "___VARIABLE_productName:identifier___CellId"
     
     lazy var tableView : UITableView = {
@@ -81,7 +81,10 @@ extension ___VARIABLE_productName:identifier___UI: UITableViewDelegate {
         delegate?.didCommit(action: action)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didCommit(action: .didSelect(entity: ___VARIABLE_productName:identifier___Model))
+        guard let entity = entity else {
+            return
+        }
+        delegate?.didCommit(action: .didSelect(entity: entity))
     }
 }
 

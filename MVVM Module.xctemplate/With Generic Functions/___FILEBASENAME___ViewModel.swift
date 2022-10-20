@@ -17,21 +17,24 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
         case didSelect(entity: ___VARIABLE_productName:identifier___Model)
     }
     let entity = BehaviorRelay<___VARIABLE_productName:identifier___Model?>(value: nil)
-    let action = PublishSubject<Action>()
+    let action = PublishSubject<Action?>()
     let isLoading = BehaviorRelay(value: false)
     let viewNeedsReload = PublishSubject<Bool>()
     private var disposeBag = DisposeBag()
     
     init() {
         action
-            .asDriver()
+            .asDriver(onErrorJustReturn: nil)
             .drive(onNext: { [weak self] action in
                 guard let strongSelf = self else {
                     return
                 }
                 switch action {
-                    case .didSelect(let model):
-                        strongSelf.modelSelected(model)
+                    case .didSelect(let entity):
+                        strongSelf.entitySelected(entity)
+                    default:
+                        return
+
                 }
             })
             .disposed(by: disposeBag)

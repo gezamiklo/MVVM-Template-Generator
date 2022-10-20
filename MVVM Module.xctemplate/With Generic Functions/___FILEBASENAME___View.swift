@@ -17,11 +17,7 @@ protocol ___VARIABLE_productName:identifier___ViewProtocol {
 class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_productName:identifier___ViewProtocol {
     
     private var ui = ___VARIABLE_productName:identifier___UI()
-    var viewModel : ___VARIABLE_productName:identifier___ViewModel! {
-        willSet {
-            newValue.view = self
-        }
-    }
+    var viewModel : ___VARIABLE_productName:identifier___ViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
