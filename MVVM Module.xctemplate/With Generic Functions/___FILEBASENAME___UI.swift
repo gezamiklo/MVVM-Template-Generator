@@ -11,13 +11,13 @@
 import UIKit
 
 protocol ___VARIABLE_productName:identifier___UIDelegate {
-    func uiDidSelect(object: ___VARIABLE_productName:identifier___)
+    func didCommit(action: ___VARIABLE_productName:identifier___ViewModel.Action)
 }
 
 class ___VARIABLE_productName:identifier___UI : UIView {
     var delegate: ___VARIABLE_productName:identifier___UIDelegate!
     
-    var object : ___VARIABLE_productName:identifier___?
+    var object : ___VARIABLE_productName:identifier___Model?
     var cellIdentifier = "___VARIABLE_productName:identifier___CellId"
     
     lazy var tableView : UITableView = {
@@ -77,8 +77,11 @@ extension ___VARIABLE_productName:identifier___UI: UITableViewDataSource {
 }
 
 extension ___VARIABLE_productName:identifier___UI: UITableViewDelegate {
+    func didCommit(action: ___VARIABLE_productName:identifier___ViewModel.Action) {
+        delegate?.didCommit(action: action)
+    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.uiDidSelect(object: self.object!)
+        delegate?.didCommit(action: .didSelect(entity: ___VARIABLE_productName:identifier___Model))
     }
 }
 

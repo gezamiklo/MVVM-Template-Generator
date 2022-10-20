@@ -9,25 +9,50 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
-protocol ___VARIABLE_productName:identifier___ViewModelProtocol {
-    func fetchData()
-    func didReceiveUISelect(object: ___VARIABLE_productName:identifier___)
-}
-
-class ___VARIABLE_productName:identifier___ViewModel {
-    var view : ___VARIABLE_productName:identifier___ViewProtocol!
-    var object = ___VARIABLE_productName:identifier___()
+class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
+    enum Action {
+        case didSelect(entity: ___VARIABLE_productName:identifier___Model)
+    }
+    let entity = BehaviorRelay<___VARIABLE_productName:identifier___Model?>(value: nil)
+    let action = PublishSubject<Action>()
+    let isLoading = BehaviorRelay(value: false)
+    let viewNeedsReload = PublishSubject<Bool>(value: true)
     
-    func fetchData() {
-        object.didFetch(withSuccess: { (success) in
-            self.view.viewWillPresent(data: success)
-        }) { (err) in
-            debugPrint("Error happened", err as Any)
-        }
+    init() {
+        action
+            .asDriver()
+            .drive(onNext: { [weak self] action in
+                guard let strongSelf = self else {
+                    return
+                }
+                switch action {
+                    case .didSelect(let model):
+                        strongSelf.modelSelected(model)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
-    func didReceiveUISelect(object: ___VARIABLE_productName:identifier___) {
-        debugPrint("Did receive UI object", object)
+    func fetchData() {
+        isLoading.accept(true)
+        APIRequest<APIResponseDecodable<___VARIABLE_productName:identifier___>>(request: APIEndpoints.get___VARIABLE_productName:identifier___.request(), stateDelegate: self).rx.fetch()
+            .subscribe(onNext: { [weak self] response in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf.entity.accept(response.value)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    func entitySelected(_ entity: ___VARIABLE_productName:identifier___) {
+        debugPrint("Did receive UI object", entity)
+    }
+    
+    func requestStateChanged(_ request: any APIRequestProtocol, state: APIRequestState) {
+        isLoading.accept(state == .fetching)
     }
 }
