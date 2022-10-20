@@ -11,7 +11,7 @@
 import UIKit
 
 protocol ___VARIABLE_productName:identifier___ViewProtocol {
-    func viewWillPresent(data: ___VARIABLE_productName:identifier___Model)
+    func viewWillPresent(entity: ___VARIABLE_productName:identifier___Model)
 }
 
 class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_productName:identifier___ViewProtocol {
@@ -30,8 +30,8 @@ class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_p
         view = ui
     }
     
-    func viewWillPresent(data: ___VARIABLE_productName:identifier___Model) {
-        ui.object = data
+    func viewWillPresent(entity: ___VARIABLE_productName:identifier___Model) {
+        ui.entity = entity
     }
 }
 

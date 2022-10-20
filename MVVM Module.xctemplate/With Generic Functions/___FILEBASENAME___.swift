@@ -10,7 +10,7 @@
 /// ___VARIABLE_productName:identifier___ Model
 struct  ___VARIABLE_productName:identifier___Model: Codable {
     var id : Int?
-    var name : Int?
+    var name : String?
     
     enum CodingKeys: String, CodingKey {
         case id, name
