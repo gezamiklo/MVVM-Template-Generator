@@ -40,7 +40,7 @@ class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_p
 }
 
 extension ___VARIABLE_productName:identifier___View : ___VARIABLE_productName:identifier___UIDelegate {
-    func uiDidSelect(object: ___VARIABLE_productName:identifier___Model) {
-        viewModel.didReceiveUISelect(object: object)
+    func didCommit(action: MyMVVMViewModel.Action) {
+        viewModel.action.onNext(action)
     }
 }

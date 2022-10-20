@@ -19,7 +19,7 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
     let entity = BehaviorRelay<___VARIABLE_productName:identifier___Model?>(value: nil)
     let action = PublishSubject<Action>()
     let isLoading = BehaviorRelay(value: false)
-    let viewNeedsReload = PublishSubject<Bool>(value: true)
+    let viewNeedsReload = PublishSubject<Bool>()
     private var disposeBag = DisposeBag()
     
     init() {
