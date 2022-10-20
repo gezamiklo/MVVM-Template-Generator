@@ -16,7 +16,7 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
     enum Action {
         case didSelect(entity: ___VARIABLE_productName:identifier___Model)
     }
-    let entity = BehaviorRelay<___VARIABLE_productName:identifier___Model?>(value: nil)
+    let entity = BehaviorRelay<[___VARIABLE_productName:identifier___Model]>(value: [])
     let action = PublishSubject<Action?>()
     let isLoading = BehaviorRelay(value: false)
     let viewNeedsReload = PublishSubject<Bool>()
@@ -42,12 +42,12 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
     
     func fetchData() {
         isLoading.accept(true)
-        APIRequest<APIResponseDecodable<___VARIABLE_productName:identifier___Model>>(request: APIEndpoints.get___VARIABLE_productName:identifier___.request(), stateDelegate: self).rx.fetch()
+        APIRequest<APIResponseDecodable<[___VARIABLE_productName:identifier___Model]>>(request: APIEndpoints.get___VARIABLE_productName:identifier___.request(), stateDelegate: self).rx.fetch()
             .subscribe(onNext: { [weak self] response in
                 guard let strongSelf = self else {
                     return
                 }
-                strongSelf.entity.accept(response.value)
+                strongSelf.entity.accept(response.value ?? [])
             })
             .disposed(by: disposeBag)
     }
