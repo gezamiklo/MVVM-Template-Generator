@@ -11,7 +11,7 @@
 import UIKit
 
 protocol ___VARIABLE_productName:identifier___ViewProtocol {
-    func viewWillPresent(data: ___VARIABLE_productName:identifier___)
+    func viewWillPresent(data: ___VARIABLE_productName:identifier___Model)
 }
 
 class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_productName:identifier___ViewProtocol {
@@ -34,13 +34,13 @@ class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_p
         view = ui
     }
     
-    func viewWillPresent(data: ___VARIABLE_productName:identifier___) {
+    func viewWillPresent(data: ___VARIABLE_productName:identifier___Model) {
         ui.object = data
     }
 }
 
 extension ___VARIABLE_productName:identifier___View : ___VARIABLE_productName:identifier___UIDelegate {
-    func uiDidSelect(object: ___VARIABLE_productName:identifier___) {
+    func uiDidSelect(object: ___VARIABLE_productName:identifier___Model) {
         viewModel.didReceiveUISelect(object: object)
     }
 }

@@ -20,6 +20,7 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
     let action = PublishSubject<Action>()
     let isLoading = BehaviorRelay(value: false)
     let viewNeedsReload = PublishSubject<Bool>(value: true)
+    private var disposeBag = DisposeBag()
     
     init() {
         action
@@ -38,7 +39,7 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
     
     func fetchData() {
         isLoading.accept(true)
-        APIRequest<APIResponseDecodable<___VARIABLE_productName:identifier___>>(request: APIEndpoints.get___VARIABLE_productName:identifier___.request(), stateDelegate: self).rx.fetch()
+        APIRequest<APIResponseDecodable<___VARIABLE_productName:identifier___Model>>(request: APIEndpoints.get___VARIABLE_productName:identifier___.request(), stateDelegate: self).rx.fetch()
             .subscribe(onNext: { [weak self] response in
                 guard let strongSelf = self else {
                     return
@@ -48,7 +49,7 @@ class ___VARIABLE_productName:identifier___ViewModel: APIRequestStateDelegate {
             .disposed(by: disposeBag)
     }
     
-    func entitySelected(_ entity: ___VARIABLE_productName:identifier___) {
+    func entitySelected(_ entity: ___VARIABLE_productName:identifier___Model) {
         debugPrint("Did receive UI object", entity)
     }
     
