@@ -17,7 +17,7 @@ protocol ___VARIABLE_productName:identifier___UIDelegate {
 class ___VARIABLE_productName:identifier___UI : UIView {
     var delegate: ___VARIABLE_productName:identifier___UIDelegate!
     
-    var entity : ___VARIABLE_productName:identifier___Model?
+    var entity : [___VARIABLE_productName:identifier___Model]?
     var cellIdentifier = "___VARIABLE_productName:identifier___CellId"
     
     lazy var tableView : UITableView = {
@@ -67,11 +67,12 @@ extension ___VARIABLE_productName:identifier___UI: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return entity.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        cell.textLabel?.text = entity[indexPath.row].name
         return cell
     }
 }
@@ -81,10 +82,10 @@ extension ___VARIABLE_productName:identifier___UI: UITableViewDelegate {
         delegate?.didCommit(action: action)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let entity = entity else {
+        guard let entitySelected = entity[indexPath.row] else {
             return
         }
-        delegate?.didCommit(action: .didSelect(entity: entity))
+        delegate?.didCommit(action: .didSelect(entity: entitySelected))
     }
 }
 
