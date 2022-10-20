@@ -10,11 +10,7 @@
 
 import UIKit
 
-protocol ___VARIABLE_productName:identifier___ViewProtocol {
-    func viewWillPresent(entity: ___VARIABLE_productName:identifier___Model)
-}
-
-class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_productName:identifier___ViewProtocol {
+class ___VARIABLE_productName:identifier___View: UIViewController {
     
     private var ui = ___VARIABLE_productName:identifier___UI()
     var viewModel : ___VARIABLE_productName:identifier___ViewModel!
@@ -22,7 +18,9 @@ class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_p
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        viewModel = ___VARIABLE_productName:identifier___ViewModel()
         viewModel.fetchData()
+        initViewModel()
     }
     
     override func loadView() {
@@ -30,9 +28,17 @@ class ___VARIABLE_productName:identifier___View: UIViewController, ___VARIABLE_p
         view = ui
     }
     
-    func viewWillPresent(entity: ___VARIABLE_productName:identifier___Model) {
-        ui.entity = entity
+    func initViewModel() {
+        viewModel.entity.asDriver()
+            .drive(onNext: { [weak self] entity in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.ui.entity = entity
+            })
     }
+    
 }
 
 extension ___VARIABLE_productName:identifier___View : ___VARIABLE_productName:identifier___UIDelegate {
